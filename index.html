@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/css/reset.css"> -->
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <!-- <script src="/js/index.js"></script> -->
+    <title>Movie</title>
+</head>
+<body>
+    <header>
+        <nav><h1>최고 평점 영화 콜렉션</h1></nav>
+    </header>
+    <div class="container">
+        <section>
+            <span class="search-title">영화 검색 : </span>
+            <input class="search-input" type="search" onkeyup="filter()" placeholder="영화 제목을 검색해 보세요"/>
+            <span class="search-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.9167 11.6667H12.2583L12.025 11.4417C12.8417 10.4917 13.3333 9.25833 13.3333 7.91667C13.3333 4.925 10.9083 2.5 7.91667 2.5C4.925 2.5 2.5 4.925 2.5 7.91667C2.5 10.9083 4.925 13.3333 7.91667 13.3333C9.25833 13.3333 10.4917 12.8417 11.4417 12.025L11.6667 12.2583V12.9167L15.8333 17.075L17.075 15.8333L12.9167 11.6667ZM7.91667 11.6667C5.84167 11.6667 4.16667 9.99167 4.16667 7.91667C4.16667 5.84167 5.84167 4.16667 7.91667 4.16667C9.99167 4.16667 11.6667 5.84167 11.6667 7.91667C11.6667 9.99167 9.99167 11.6667 7.91667 11.6667Z" fill="#5B5B5B"/></svg>
+            </span>
+            <span class="search-x-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_5879_54071)"><path d="M9.9974 1.66602C5.38906 1.66602 1.66406 5.39102 1.66406 9.99935C1.66406 14.6077 5.38906 18.3327 9.9974 18.3327C14.6057 18.3327 18.3307 14.6077 18.3307 9.99935C18.3307 5.39102 14.6057 1.66602 9.9974 1.66602ZM14.1641 12.991L12.9891 14.166L9.9974 11.1743L7.00573 14.166L5.83073 12.991L8.8224 9.99935L5.83073 7.00768L7.00573 5.83268L9.9974 8.82435L12.9891 5.83268L14.1641 7.00768L11.1724 9.99935L14.1641 12.991Z" fill="#C2C4C7"/></g><defs><clipPath id="clip0_5879_54071"><rect width="20" height="20" fill="white"/></clipPath></defs></svg>
+            </span>
+        </section>
+        <article>
+            <div id="card-list"></div>
+        </article>
+    </div>
+    <footer></footer>
+    <script>
+        // movie api (top movie) 가져오기
+        const options = {
+            method: 'GET',
+            headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZGRmNTgxNGU2ZTMyMjhhNTlmYjAzNGY0ZGIzYmIxYSIsInN1YiI6IjY1MmZhNTUzYTgwMjM2MDBjMzE2NjNlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._cJQ8IYoY6crqMv9gSH3HFxiIQYaippe29c1gtelVSk'
+            }
+        };
+        
+        fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response.results);
+                // https://image.tmdb.org/t/p/w500
+
+                // original_title
+                // overview
+
+                //Rating  vote_average
+            })
+            .catch(err => {
+                console.error(err);
+                alert('에러가 발생했습니다. 고객센터에 문의바랍니다.');
+            });
+            
+    </script>
+</body>
+</html>
