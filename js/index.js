@@ -49,11 +49,30 @@ function addCard(card) {
 // 영화 id (화살표 함수)
 let clickEvent = (id) => alert('영화 ID : ' + id);
 
+// 검색 버튼 클릭 이벤트
+function handleSearch(event){
+    event.preventDefault(); // 브라우저 기본 동작 제어
+    let search = document.getElementById("search-input").value.toLowerCase();
+    let cardInner = document.querySelectorAll(".card");
+    for (let i = 0; i < cardInner.length; i++) {
+        let name = cardInner[i].children[1].innerText;
+        if (name.toLowerCase().indexOf(search) != -1) {
+            cardInner[i].classList.remove('displayNone_IM');
+        } else {
+            cardInner[i].classList.add('displayNone_IM');
+        }
+    }
+    document.getElementById("search-input-live").value = search;
+    noResultFun();
+}
+
+// document.getElementById('search-form').addEventListener('submit', handleSearch)
+
 // 검색 내용 지우기
 function filterClear(){
     const btnClear = document.querySelector('.search-x-icon');
     const btnSearch = document.querySelector('.search-icon');
-    const btnInput = document.querySelector('.search-input');
+    const btnInput = document.querySelector('#search-input-live');
 
     btnInput.value = "";
     btnClear.classList.add('displayNone_IM');
@@ -66,7 +85,7 @@ function filterClear(){
 function filter() {
     const btnClear = document.querySelector('.search-x-icon');
     const btnSearch = document.querySelector('.search-icon');
-    const btnInput = document.querySelector('.search-input');
+    const btnInput = document.querySelector('#search-input-live');
     
     if(btnInput.value == "") {
         btnClear.classList.add('displayNone_IM');
@@ -74,9 +93,10 @@ function filter() {
     } else {
         btnClear.classList.remove('displayNone_IM');
         btnSearch.classList.add('displayNone_IM');
+        console.log()
     }
 
-    let search = document.querySelector(".search-input").value.toLowerCase();
+    let search = document.querySelector("#search-input-live").value.toLowerCase();
     let cardInner = document.querySelectorAll(".card");
     for (let i = 0; i < cardInner.length; i++) {
         let name = cardInner[i].children[1].innerText;
@@ -87,6 +107,7 @@ function filter() {
         }
     }
     noResultFun();
+    document.getElementById("search-input").value = btnInput.value;
 }
 
 // 검색 결과 없을 때의 화면

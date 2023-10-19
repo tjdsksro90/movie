@@ -11,15 +11,22 @@ header nav h1 {
 .container {
   line-height: 1.5;
 }
-.container section {
+.container section:first-child {
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+.container section:nth-child(2) {
+  padding-bottom: 25px;
+  padding-top: 10px;
+}
+.container section .search-form {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 25px;
   display: flex;
   position: relative;
   gap: 10px;
 }
-.container section .search-title {
+.container section .search-form .search-title {
   width: 90px;
   background: #007cff;
   color: #fff;
@@ -28,21 +35,33 @@ header nav h1 {
   align-items: center;
   font-weight: bold;
 }
-.container section .search-input {
+.container section .search-form .search-input {
   flex: 1;
   padding: 10px 20px;
 }
-.container section .search-icon {
+.container section .search-form .search-icon {
   position: absolute;
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
 }
-.container section .search-x-icon {
+.container section .search-form .search-x-icon {
   position: absolute;
   right: 40px;
   top: 50%;
   transform: translateY(-50%);
+}
+.container section .search-form .search-button {
+  width: 150px;
+  font-weight: bold;
+  border: 1px solid #ababab;
+  background: #e9e9e9;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+.container section .search-form .search-button:hover, .container section .search-form .search-button:active {
+  background: #ccc;
+  border: 1px solid #ccc;
 }
 .container article {
   background-color: #20284d;

@@ -14,36 +14,57 @@ header {
 .container {
     line-height: 1.5;
     section {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 25px;
-        display: flex;
-        position: relative;
-        gap: 10px;
-        .search-title {
-            width: 90px;
-            background: #007cff;
-            color: #fff;
+        &:first-child {
+            padding-top: 25px;
+            padding-bottom: 10px;
+        }
+        &:nth-child(2) {
+            padding-bottom: 25px;
+            padding-top: 10px;
+        }
+        .search-form {
+            max-width: 1280px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-        }
-        .search-input {
-            flex: 1;
-            padding: 10px 20px;
-        }
-        .search-icon {
-            position: absolute;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .search-x-icon {
-            position: absolute;
-            right: 40px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: relative;
+            gap: 10px;
+            .search-title {
+                width: 90px;
+                background: #007cff;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: bold;
+            }
+            .search-input {
+                flex: 1;
+                padding: 10px 20px;
+            }
+            .search-icon {
+                position: absolute;
+                right: 40px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .search-x-icon {
+                position: absolute;
+                right: 40px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .search-button {
+                width: 150px;
+                font-weight: bold;
+                border: 1px solid #ababab;
+                background: #e9e9e9;
+                box-sizing: border-box;
+                transition: all .3s;
+                &:hover, &:active {
+                    background: #ccc;
+                    border: 1px solid #ccc;
+                }
+            }
         }
     }
     article {
