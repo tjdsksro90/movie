@@ -1,5 +1,109 @@
 @import 'reset.css';
-
+header {
+    nav {
+        h1 {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            background: #000;
+            color: #fff;
+            padding: 25px;
+        }
+    }
+}
 .container {
-    background-color: blue;
+    line-height: 1.5;
+    section {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 25px;
+        display: flex;
+        position: relative;
+        gap: 10px;
+        .search-title {
+            width: 90px;
+            background: #007cff;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .search-input {
+            flex: 1;
+            padding: 10px 20px;
+        }
+        .search-icon {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .search-x-icon {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    article {
+        background-color: #20284d;
+        padding: 100px 0;
+        > div {
+            max-width: 1280px;
+            margin: 0 auto;
+            .card-list {
+                display: flex;
+                flex-wrap: wrap; 
+                justify-content: center;
+                gap: 20px;
+                .card {
+                    width: 305px;
+                    padding: 30px;
+                    background: #fff;
+                    display: flex;
+                    flex-direction: column;
+                    .card-img {
+                        width: 100%;
+                        img {
+                            width: 100%;
+                        }
+                    }
+                    .card-title {
+                        font-size: 24px;
+                        font-weight: 800;
+                        margin-bottom: 16px;
+                        margin-top: 24px;
+                    }
+                    .card-desc {
+                        margin-bottom: 10px;
+                    }
+                    .card-rating {
+                        font-size: 12px;
+                        color: #666;
+                        border-top: 1px solid #666;
+                        padding-top: 10px;
+                        text-align: right;
+                        margin-top: auto;
+                        .rating {
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+
+            .noResult {
+                color: #fff;
+                font-size: 30px;
+                font-style: italic;
+                font-weight: 100;
+                padding: 250px 0;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.displayNone_IM {
+    display: none !important;
 }

@@ -10,3 +10,16 @@ table {border-collapse:collapse;border-spacing:0}
 
 ul { list-style: none;}
 img { min-width: 100%; display: block; } 
+
+/* IE의 경우 */
+input::-ms-clear,
+input::-ms-reveal{
+    display:none;
+}
+/* 크롬의 경우 */
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+    display:none;
+}
