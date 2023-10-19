@@ -62,7 +62,7 @@ function handleSearch(event){
             cardInner[i].classList.add('displayNone_IM');
         }
     }
-    document.getElementById("search-input-live").value = search;
+    document.getElementById("search-input-live").value = document.getElementById("search-input").value;
     noResultFun();
 }
 
