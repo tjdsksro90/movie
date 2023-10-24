@@ -10,9 +10,7 @@
 fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
     .then(response => response.json())
     .then(response => {
-        // console.log(response.results);
-        response.results.forEach((item, index) => {
-            // console.log(item, index);
+        response.results.forEach(item => {
             addCard(item);
         });
 
@@ -24,7 +22,6 @@ fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', opti
 
 // 카드 추가 html
 const cardHtml = function (card) {
-    // console.log(card);
     let html = '';
 
     html = `
@@ -47,7 +44,13 @@ function addCard(card) {
 }
 
 // 영화 id (화살표 함수)
-let clickEvent = (id) => alert('영화 ID : ' + id);
+let clickEvent = (id) => {
+    alert('영화 ID : ' + id);
+    const url = new URL(window.location.href);
+    const urlParams = url.searchParams; // url.search = '?id={number}'
+    const idParam = urlParams.get('id'); // 파라미터 아이디 가져오기
+    window.location.href = url.origin + url.pathname + '?id='+ id; // 페이지 이동
+}
 
 // 검색 버튼 클릭 이벤트
 function handleSearch(event){
@@ -65,8 +68,6 @@ function handleSearch(event){
     document.getElementById("search-input-live").value = document.getElementById("search-input").value;
     noResultFun();
 }
-
-// document.getElementById('search-form').addEventListener('submit', handleSearch)
 
 // 검색 내용 지우기
 function filterClear(){
@@ -124,3 +125,104 @@ function noResultFun(){
         }
     }
 }
+
+
+///////////////////////////////////////////////// 리뷰 부분 
+
+const movieId = getMovieIdFromURL(); // URL에서 영화 식별자를 가져오는 함수
+// 현재 페이지의 URL에서 영화 식별자를 추출
+function getMovieIdFromURL() { // URLSearchParams.toString()
+    const url = new URL(window.location.href);
+    const urlParams = url.searchParams; // url.search = '?id={number}'
+    // ex) URL이 "http://example.com/movies?id=123"인 경우,
+    const movieId = urlParams.get('id'); // 파라미터 아이디 가져오기
+    return movieId;
+}
+
+// 페이지가 로드될 때 기존 댓글 불러오기
+window.onload = function () {
+    // 경로상 ?id=000 유무 파악으로 댓글 show/hide
+    if(!(movieId == null || movieId == undefined)) loadComments();
+    else document.getElementById('commentForm').closest('section').classList.add('displayNone_IM');
+
+    // 댓글 작성 폼 제출 시 실행될 함수 // html 먼저 로드 되고 기능 구현
+    document.getElementById('commentForm').onsubmit = function (e) {
+        e.preventDefault();
+
+        // 입력된 이름과 댓글 내용 가져오기
+        let name = document.getElementById('name').value;
+        let comment = document.getElementById('comment').value;
+        let password = document.getElementById('password').value;
+
+        // 댓글 객체 생성
+        let newComment = {
+            user: name,
+            pass: password,
+            review: comment,
+        };
+
+        // 기존 댓글 배열 가져오기
+        let comments = getCommentsForMovie(movieId);
+
+        // 새로운 댓글 추가
+        comments.push(newComment);
+
+        // 변경된 댓글 배열 저장
+        setCommentsForMovie(movieId, comments)
+
+        // 댓글 목록 다시 불러오기
+        loadComments();
+
+        // 폼 초기화
+        document.getElementById('commentForm').reset();
+    };
+};
+
+// 영화 식별자를 기반으로 해당 영화의 댓글을 가져옴
+function getCommentsForMovie(movieId) {
+    const commentsJSON = localStorage.getItem(`comments_${movieId}`);
+    return commentsJSON ? JSON.parse(commentsJSON) : []; // JSON.parse = JSON 텍스트 문자열 -> JavaScript 객체
+}
+
+// 영화 식별자를 기반으로 해당 영화의 댓글을 설정
+function setCommentsForMovie(movieId, comments) {
+    localStorage.setItem(`comments_${movieId}`, JSON.stringify(comments)); // JSON.stringify = JavaScript 객체 -> JSON 텍스트 문자열
+}
+
+// 댓글 수정
+function editCommentForMoive(){
+    // console.log(localStorage.getItem(`comments_${movieId}`));
+}
+
+// 댓글 삭제
+function delCommentForMoive(){
+    // 
+}
+
+// 댓글 목록 불러오기
+function loadComments() {
+    document.getElementById('commentForm').closest('.section').classList.remove('displayNone_IM');
+    let commentList = document.getElementById('commentList');
+    commentList.innerHTML = '';
+
+    let comments = getCommentsForMovie(movieId);
+
+    for (let i = 0; i < comments.length; i++) {
+        let comment = comments[i];
+
+        let listItem = document.createElement('li');
+        listItem.innerHTML = `
+        <div class="comment-box">
+            <span>${comment.user} : </span>
+            <span>${comment.review}</span>
+        </div>
+        <div class="comment-box">
+            <button type="button" onclick="editCommentForMoive()">수정</p>
+            <p>삭제</p>
+        </div>
+        `
+        commentList.appendChild(listItem);
+    }
+}
+
+///////////////////////////////////////////////// !리뷰 부분!
