@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav><h1>최고 평점 영화 콜렉션</h1></nav>
+        <nav><h1><a href="/" title="home">최고 평점 영화 콜렉션</a></h1></nav>
     </header>
     <div class="container">
         <section>
@@ -45,25 +45,24 @@
             </form>
         </section>
         <section class="section displayNone_IM">
-            <form id="commentForm">
-                <label for="name">유저 이름:</label>
-                <input type="text" id="name" required /><br /><br />
+            <form id="comment-form" class="comment-form">
+                <label for="name">유저 이름</label>
+                <input type="text" id="name" required />
 
-                <label for="password">비밀번호:</label>
-                <input type="password" id="password" required></textarea><br /><br />
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" required></textarea>
           
-                <label for="comment">코멘트:</label>
-                <textarea id="comment" required></textarea><br /><br />
+                <label for="comment">코멘트</label>
+                <textarea id="comment" required></textarea>
           
                 <button type="submit">제출</button>
-              </form>
-          
-              <ul id="commentList"></ul>
+            </form>
+            <ul id="comment-list"></ul>
         </section>
         <article>
             <div>
                 <div id="card-list" class="card-list"></div>
-                <div class="noResult displayNone_IM">검색 결과가 <br/>없습니다.</div>
+                <div class="no-result displayNone_IM">검색 결과가 <br/>없습니다.</div>
             </div>
         </article>
     </div>

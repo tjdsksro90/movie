@@ -43,6 +43,9 @@ header {
             padding-bottom: 25px;
             padding-top: 10px;
         }
+        &:nth-child(4) {
+            padding-bottom: 25px;
+        }
         .search-form {
             max-width: 1280px;
             width: 90%;
@@ -87,6 +90,14 @@ header {
                     border: 1px solid #ccc;
                 }
             }
+        }
+        .comment-form {
+            max-width: 1280px;
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
     }
     article {
@@ -136,7 +147,7 @@ header {
                 }
             }
 
-            .noResult {
+            .no-result {
                 color: #fff;
                 font-size: 30px;
                 font-style: italic;

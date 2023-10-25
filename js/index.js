@@ -114,7 +114,7 @@ function filter() {
 // 검색 결과 없을 때의 화면
 function noResultFun(){
     let cardInner = document.querySelectorAll(".card");
-    let noResult = document.querySelector('.noResult');
+    let noResult = document.querySelector('.no-result');
 
     for(var i=0;i<cardInner.length;i++){
         if(cardInner[i].classList.contains('displayNone_IM')){
@@ -143,10 +143,10 @@ function getMovieIdFromURL() { // URLSearchParams.toString()
 window.onload = function () {
     // 경로상 ?id=000 유무 파악으로 댓글 show/hide
     if(!(movieId == null || movieId == undefined)) loadComments();
-    else document.getElementById('commentForm').closest('section').classList.add('displayNone_IM');
+    else document.getElementById('comment-form').closest('section').classList.add('displayNone_IM');
 
     // 댓글 작성 폼 제출 시 실행될 함수 // html 먼저 로드 되고 기능 구현
-    document.getElementById('commentForm').onsubmit = function (e) {
+    document.getElementById('comment-form').onsubmit = function (e) {
         e.preventDefault();
 
         // 입력된 이름과 댓글 내용 가져오기
@@ -174,7 +174,7 @@ window.onload = function () {
         loadComments();
 
         // 폼 초기화
-        document.getElementById('commentForm').reset();
+        document.getElementById('comment-form').reset();
     };
 };
 
@@ -189,20 +189,94 @@ function setCommentsForMovie(movieId, comments) {
     localStorage.setItem(`comments_${movieId}`, JSON.stringify(comments)); // JSON.stringify = JavaScript 객체 -> JSON 텍스트 문자열
 }
 
-// 댓글 수정
-function editCommentForMoive(){
-    // console.log(localStorage.getItem(`comments_${movieId}`));
+// 댓글 수정 폼
+function editCommentAlert(idx){
+    // json을 객채화
+    const commentsJSON = JSON.parse(localStorage.getItem(`comments_${movieId}`));
+    // 해당 comment의 비밀번호 확인
+    const commentPassword = commentsJSON[idx].pass;
+    // prompt 창으로 비밀번호 값 받기
+    const editItem = prompt('비밀번호를 입력하세요', '');
+
+    // 비밀번호 확인 후 수정
+    if(editItem != commentPassword) {
+        alert('비밀번호를 확인하세요.')
+    } else {
+        // 수정 될 코멘트에 value 값 가져오기
+        const editComment = document.querySelector(`.commentEdit-${idx}`);
+        editComment.value = document.querySelector(`.comment-edit-after-${idx}`).innerText;
+
+        // 수정하는 화면 show / 수정삭제+기존코멘트 hide
+        const editAfter = document.querySelectorAll(`.comment-edit-after-${idx}`);
+        const editBefore = document.querySelectorAll(`.comment-edit-before-${idx}`);
+        editAfter.forEach(item => item.classList.add('displayNone_IM'));
+        editBefore.forEach(item => item.classList.remove('displayNone_IM'));
+    }
 }
 
-// 댓글 삭제
-function delCommentForMoive(){
-    // 
+// 댓글 수정 취소
+function editCommentCancel(idx){
+     // 수정하는 화면 hide / 수정삭제+기존코멘트 show
+     const editAfter = document.querySelectorAll(`.comment-edit-after-${idx}`);
+     const editBefore = document.querySelectorAll(`.comment-edit-before-${idx}`);
+     editAfter.forEach(item => item.classList.remove('displayNone_IM'));
+     editBefore.forEach(item => item.classList.add('displayNone_IM'));
 }
+
+// 댓글 수정
+function editcommentFormoive(idx){
+    const editComment = document.querySelector(`.commentEdit-${idx}`);
+    // 빈값이면 막기
+    if(editComment.value == '') {
+        alert('수정될 내용을 기입해주세요.');
+        return;
+    }
+    // json을 객채화
+    const commentsJSON = JSON.parse(localStorage.getItem(`comments_${movieId}`));
+    // 해당 요소 찾아서 수정
+    commentsJSON[idx].review = editComment.value;
+    // 해당 키 지우고 새롭게 입히기
+    localStorage.removeItem(`comments_${movieId}`);
+    localStorage.setItem(`comments_${movieId}`, JSON.stringify(commentsJSON))
+    // 댓글 리로드
+    loadComments();
+}
+
+// 댓글 삭제 알림창
+function delCommentAlert(idx){
+    // json을 객채화
+    const commentsJSON = JSON.parse(localStorage.getItem(`comments_${movieId}`));
+    // 해당 comment의 비밀번호 확인
+    const commentPassword = commentsJSON[idx].pass;
+    // prompt 창으로 비밀번호 값 받기
+    const delItem = prompt('비밀번호를 입력하세요', '');
+
+    // 비밀번호 확인 후 삭제
+    if(delItem != commentPassword) alert('비밀번호를 확인하세요.')
+    else delcommentFormoive(idx);
+}
+
+// 댓글 삭제 
+function delcommentFormoive(idx) {
+    // window.localStorage.removeItem(key) 사용시 배열 전부 삭제 되므로
+    // 해당 value 찾아서 제외한 리스트 재할당
+
+    // json을 객채화
+    const commentsJSON = JSON.parse(localStorage.getItem(`comments_${movieId}`));
+    // 해당 요소 제거
+    commentsJSON.splice(idx, 1);
+    // 해당 키 지우고 새롭게 입히기
+    localStorage.removeItem(`comments_${movieId}`);
+    localStorage.setItem(`comments_${movieId}`, JSON.stringify(commentsJSON))
+    // 댓글 리로드
+    loadComments();
+}
+
 
 // 댓글 목록 불러오기
 function loadComments() {
-    document.getElementById('commentForm').closest('.section').classList.remove('displayNone_IM');
-    let commentList = document.getElementById('commentList');
+    document.getElementById('comment-form').closest('.section').classList.remove('displayNone_IM');
+    let commentList = document.getElementById('comment-list');
     commentList.innerHTML = '';
 
     let comments = getCommentsForMovie(movieId);
@@ -214,11 +288,16 @@ function loadComments() {
         listItem.innerHTML = `
         <div class="comment-box">
             <span>${comment.user} : </span>
-            <span>${comment.review}</span>
+            <span class='comment-edit-after comment-edit-after-${i}'>${comment.review}</span>
         </div>
-        <div class="comment-box">
-            <button type="button" onclick="editCommentForMoive()">수정</p>
-            <p>삭제</p>
+        <div class="comment-edit comment-edit-before comment-edit-before-${i} displayNone_IM">
+            <textarea class="commentEdit commentEdit-${i}"></textarea>
+            <button type="button" onclick="editCommentCancel(${i})">취소</button>
+            <button type="button" onclick="editcommentFormoive(${i})">수정</button>
+        </div>
+        <div class="comment-more  comment-edit-after comment-edit-after-${i}">
+            <button type="button" onclick="editCommentAlert(${i})">수정</button>
+            <button type="button" onclick="delCommentAlert(${i})">삭제</button>
         </div>
         `
         commentList.appendChild(listItem);

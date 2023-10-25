@@ -40,6 +40,9 @@ header nav h1 {
   padding-bottom: 25px;
   padding-top: 10px;
 }
+.container section:nth-child(4) {
+  padding-bottom: 25px;
+}
 .container section .search-form {
   max-width: 1280px;
   width: 90%;
@@ -84,6 +87,14 @@ header nav h1 {
 .container section .search-form .search-button:hover, .container section .search-form .search-button:active {
   background: #ccc;
   border: 1px solid #ccc;
+}
+.container section .comment-form {
+  max-width: 1280px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .container article {
   background-color: #20284d;
@@ -133,7 +144,7 @@ header nav h1 {
 .container article > div .card-list .card .card-rating .rating {
   font-weight: 500;
 }
-.container article > div .noResult {
+.container article > div .no-result {
   color: #fff;
   font-size: 30px;
   font-style: italic;
