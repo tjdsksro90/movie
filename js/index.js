@@ -287,20 +287,45 @@ function loadComments() {
         let listItem = document.createElement('li');
         listItem.innerHTML = `
         <div class="comment-box">
-            <span>${comment.user} : </span>
+            <span class='comment-user'>${comment.user}</span>
             <span class='comment-edit-after comment-edit-after-${i}'>${comment.review}</span>
         </div>
         <div class="comment-edit comment-edit-before comment-edit-before-${i} displayNone_IM">
             <textarea class="commentEdit commentEdit-${i}"></textarea>
-            <button type="button" onclick="editCommentCancel(${i})">취소</button>
-            <button type="button" onclick="editcommentFormoive(${i})">수정</button>
+            <button type="button" class='btn-cancel' onclick="editCommentCancel(${i})">취소</button>
+            <button type="button" class='btn-submit' onclick="editcommentFormoive(${i})">수정</button>
         </div>
-        <div class="comment-more  comment-edit-after comment-edit-after-${i}">
-            <button type="button" onclick="editCommentAlert(${i})">수정</button>
-            <button type="button" onclick="delCommentAlert(${i})">삭제</button>
+        <div class="comment-more comment-edit-after comment-edit-after-${i}">
+            <p class="more" onclick='moreWrapFun(this)'><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.99967 8.33203C4.08301 8.33203 3.33301 9.08203 3.33301 9.9987C3.33301 10.9154 4.08301 11.6654 4.99967 11.6654C5.91634 11.6654 6.66634 10.9154 6.66634 9.9987C6.66634 9.08203 5.91634 8.33203 4.99967 8.33203ZM14.9997 8.33203C14.083 8.33203 13.333 9.08203 13.333 9.9987C13.333 10.9154 14.083 11.6654 14.9997 11.6654C15.9163 11.6654 16.6663 10.9154 16.6663 9.9987C16.6663 9.08203 15.9163 8.33203 14.9997 8.33203ZM9.99967 8.33203C9.08301 8.33203 8.33301 9.08203 8.33301 9.9987C8.33301 10.9154 9.08301 11.6654 9.99967 11.6654C10.9163 11.6654 11.6663 10.9154 11.6663 9.9987C11.6663 9.08203 10.9163 8.33203 9.99967 8.33203Z" fill="black"></path></svg></p>
+            <div class="more-box">
+                <button type="button" onclick="editCommentAlert(${i})">수정</button>
+                <button type="button" onclick="delCommentAlert(${i})">삭제</button>
+            </div>
         </div>
         `
         commentList.appendChild(listItem);
+    }
+
+}
+
+// 수정/삭제 more 버튼 부분
+
+// 배경 클릭시 창 닫기
+let html = document.querySelector('html');
+html.onclick = (event) => {
+    if(!(event.target.classList.contains('area') || event.target.parentNode.classList.contains('area'))){
+        document.querySelectorAll('.more-box').forEach(item => item.classList.remove('active'));
+        document.querySelectorAll('.more').forEach(item => item.classList.remove('area'));
+    }
+}
+
+// 더보기 버튼 이벤트
+function moreWrapFun(el){
+    if(!(el.classList.contains('area'))){
+        document.querySelectorAll('.more-box').forEach(item => item.classList.remove('active'));
+        document.querySelectorAll('.more').forEach(item => item.classList.remove('area'));
+        el.nextElementSibling.classList.add('active');
+        el.classList.add('area');
     }
 }
 

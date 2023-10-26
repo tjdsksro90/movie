@@ -45,19 +45,25 @@
             </form>
         </section>
         <section class="section displayNone_IM">
+            <div class="comment-my">
+                <h3>Reviews&nbsp;<span id="comment-count" class="comment-count">0</span></h3>
+            </div>
             <form id="comment-form" class="comment-form">
-                <label for="name">유저 이름</label>
-                <input type="text" id="name" required />
-
-                <label for="password">비밀번호</label>
-                <input type="password" id="password" required></textarea>
-          
-                <label for="comment">코멘트</label>
-                <textarea id="comment" required></textarea>
-          
-                <button type="submit">제출</button>
+                <div class="form-wrap comment-basic">
+                    <label for="name">유저 이름</label>
+                    <input type="text" id="name" maxlength="20" required />
+                </div>
+                <div class="form-wrap comment-basic">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" maxlength="8" required></textarea>
+                </div>
+                <div class="form-wrap comment-wrap">
+                    <label for="comment" class="displayNone_IM">코멘트</label>
+                    <textarea id="comment" class="comment" placeholder="리뷰 작성글을 남겨주세요" required></textarea>
+                </div>
+                <button type="submit" class="comment-submit">제출</button>
             </form>
-            <ul id="comment-list"></ul>
+            <ul id="comment-list" class="comment-list"></ul>
         </section>
         <article>
             <div>
